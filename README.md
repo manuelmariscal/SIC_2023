@@ -26,27 +26,6 @@
 
 
 
-Repo where code and docs from Samsung Innovation Campus 2023 from an active student
+Repo where code and docs from Samsung Innovation Campus 2023 resides from active students.
 
-## Clase Presencial 1 - 02 de Octubre del 2023
-
-En python existen muchos operadores de cadenas, podemos utilizar la siguiente documentacion para saber los tratamientos básicos de datos dentro del entorno.
-
-Useful Link: https://www.freecodecamp.org/news/basic-operators-in-python-with-examples/
-
-Dentro de este repositorio podemos encontrar varios archivos de codigo donde se muestran ejemplos de codigo básico.
-
-En la funcion range se hace una sobrecarga de funciones, por lo cual si noostros asignamos un rango, este nos arrojara una lista con valores numericos, con lo cual es el numero total de elementos iniciando del 0 y terminando con el numero total de elementos -1.
-
-Para hacer rangos con pasos de variable mas altos se usan 3 valores, inicio, final y tamaño del paso, por ejemplo: 
-
-`#Pyhton`
-```python
-for i in list(range(30, 2, -2))
-  print(i)
-```
-
-Nos arroja una lista que va del 30 al 4, debido a leyes de signos.
-
-# Clase Virtual - 09 de Octubre del 2023
 
