@@ -21,6 +21,7 @@ def main():
             file.write(data)
         else:
             print(f"Distance > span!! scaled span: {span}, dist: {dist}")
+            
         sleep(1)
         
     
