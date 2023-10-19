@@ -1,6 +1,7 @@
 # SIC2023
 
 ## Tech Stack
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
@@ -22,8 +23,4 @@
 
 ```
 
-
-
 Repo where code and docs from Samsung Innovation Campus 2023 resides from active students.
-
-
