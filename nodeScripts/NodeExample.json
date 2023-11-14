@@ -1,0 +1,8 @@
+{
+    "name": "NodeExample",
+    "version": "0.1.0",
+    "description": "NodeExample1",
+    "main": "hello-world-server.js",
+    "scripts": {"test": "echo\ "Error no test echo"}
+    
+}
