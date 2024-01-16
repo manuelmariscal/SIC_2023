@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control de LEDs y Relé</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="text-center">
+    <div class="container">
+        <h1 class="mt-5">Estado de los LEDs y el Relé</h1>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h2>LED Rojo</h2>
+                <p>Estado: {{ red_led_status }}</p>
+            </div>
+            <div class="col-md-4">
+                <h2>LED Verde</h2>
+                <p>Estado: {{ green_led_status }}</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Relé</h2>
+                <p>Estado: {{ relay_status }}</p>
+            </div>
+        </div>
+        <form method="POST" action="/control" class="mt-4">
+            <div class="form-group">
+                <label for="user_input">Ingresa 'O' para encender el verde, 'C' para encender el rojo, o 'Q' para salir:</label>
+                <input type="text" name="user_input" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>
