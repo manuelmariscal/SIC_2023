@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LockSync Guardian Console v1.0</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>LockSync Guardian - AccessConsole v1.0</h1>
+    </div>
+    <div class="container" id="loginContainer">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="username" placeholder="Usuario"><br>
+        <input type="password" id="password" placeholder="Contraseña"><br>
+        <button onclick="login()">Ingresar</button>
+    </div>
+    <div class="container" id="mainContainer" style="display: none;">
+        <h2>Generar Código de Acceso</h2>
+        <button onclick="generateCode()">Generar Código</button>
+        <p id="code"></p>
+
+        <h2>Estado de la Puerta</h2>
+        <button onclick="getDoorStatus()">Ver Estado</button>
+        <p id="doorStatus"></p>
+
+        <h2>Registro de RFID</h2>
+        <button onclick="startRegistration()">Iniciar Registro RFID</button>
+        <button onclick="stopRegistration()">Detener Registro RFID</button>
+    </div>
+
+    <script>
+        let isAuthenticated = false;
+        let authToken = ''; // Almacena el token de autenticación
+
+        function login() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({username: username, password: password})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    isAuthenticated = true;
+                    authToken = data.token; // Almacena el token
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('mainContainer').style.display = 'block';
+                } else {
+                    alert("Credenciales inválidas");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function generateCode() {
+            if (!isAuthenticated) {
+                alert("Por favor, inicie sesión primero.");
+                return;
+            }
+
+            fetch('/generate_code', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('code').textContent = "Código Generado: " + data.code;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function getDoorStatus() {
+            if (!isAuthenticated) {
+                alert("Por favor, inicie sesión primero.");
+                return;
+            }
+
+            fetch('/door_status')
+            .then(response => response.json())
+            .then(data => {
+                var status = "Estado de la Puerta: " + (data.open ? "Abierta" : "Cerrada") + ", " + (data.locked ? "Bloqueada" : "Desbloqueada");
+                document.getElementById('doorStatus').textContent = status;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function addRfidUid() {
+            if (!isAuthenticated) {
+                alert("Por favor, inicie sesión primero.");
+                return;
+            }
+
+            var uid = document.getElementById('rfidUid').value;
+
+            fetch('/add_rfid_uid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': authToken // Usa el token almacenado
+                },
+                body: JSON.stringify({uid: uid})
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        function startRegistration() {
+            if (!isAuthenticated) {
+                alert("Por favor, inicie sesión primero.");
+                return;
+            }
+
+            fetch('/start_registration', {
+                method: 'GET',
+                headers: {
+                    'token': authToken // Usa el token almacenado
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function stopRegistration() {
+            if (!isAuthenticated) {
+                alert("Por favor, inicie sesión primero.");
+                return;
+            }
+
+            fetch('/stop_registration', {
+                method: 'GET',
+                headers: {
+                    'token': authToken // Usa el token almacenado
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
